@@ -32,7 +32,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: target/demo-0.0.1-SNAPSHOT.war
-          target: /var/lib/tomcat9/webapps/demo.war
+          target: /var/lib/tomcat10/webapps/demo.war
 
       # 4️⃣ Reiniciar Tomcat
       - name: Restart Tomcat
@@ -42,4 +42,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            sudo systemctl restart tomcat9
+            sudo systemctl restart tomcat10
