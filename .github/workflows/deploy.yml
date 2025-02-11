@@ -33,6 +33,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: target/demo-0.0.1-SNAPSHOT.war
           target: /home/ubuntu/
+          strip_components: 1
 
       # 4️⃣ Mover el archivo .war a la ubicación de Tomcat y ajustar permisos
       - name: Move .war to Tomcat directory and set permissions
