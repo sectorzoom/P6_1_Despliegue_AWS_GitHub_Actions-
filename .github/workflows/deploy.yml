@@ -24,22 +24,19 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
-      # 3️⃣ Desplegar el .war en el servidor EC2
-      - name: Deploy to EC2
+      # 3️⃣ Copiar el .war al servidor EC2
+      - name: Copy .war to EC2
         uses: appleboy/scp-action@v0.1.5
         with:
           host: 3.87.213.232
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: target/demo-0.0.1-SNAPSHOT.war
-          target: /var/lib/tomcat10/webapps/demo.war
+          target: /home/ubuntu/demo.war
 
-      # 4️⃣ Reiniciar Tomcat
-      - name: Restart Tomcat
+      # 4️⃣ Mover el archivo .war a la ubicación de Tomcat y ajustar permisos
+      - name: Move .war to Tomcat directory and set permissions
         uses: appleboy/ssh-action@master
         with:
           host: 3.87.213.232
-          username: ubuntu
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
-            sudo systemctl restart tomcat10
+
