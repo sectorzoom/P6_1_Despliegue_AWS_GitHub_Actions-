@@ -28,7 +28,7 @@ jobs:
       - name: Copy .war to EC2
         uses: appleboy/scp-action@v0.1.5
         with:
-          host: 3.87.213.232
+          host: 54.205.253.120
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: target/demo-0.0.1-SNAPSHOT.war
@@ -38,11 +38,20 @@ jobs:
       - name: Move .war to Tomcat directory and set permissions
         uses: appleboy/ssh-action@master
         with:
-          host: 3.87.213.232
+          host: 54.205.253.120
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}  # Añadir la clave privada para SSH
           script: |
               sudo mv /home/ubuntu/demo.war /var/lib/tomcat10/webapps/demo.war
               sudo chown tomcat:tomcat /var/lib/tomcat10/webapps/demo.war
               sudo chmod 755 /var/lib/tomcat10/webapps/demo.war
+      # 5️⃣ Reiniciar Tomcat
+      - name: Restart Tomcat
+        uses: appleboy/ssh-action@master
+        with:
+          host: 54.205.253.120
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            sudo systemctl restart tomcat10
 
