@@ -39,4 +39,10 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: 3.87.213.232
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}  # Añadir la clave privada para SSH
+          script: |
+              sudo mv /home/ubuntu/demo.war /var/lib/tomcat10/webapps/demo.war
+              sudo chown tomcat:tomcat /var/lib/tomcat10/webapps/demo.war
+              sudo chmod 755 /var/lib/tomcat10/webapps/demo.war
 
