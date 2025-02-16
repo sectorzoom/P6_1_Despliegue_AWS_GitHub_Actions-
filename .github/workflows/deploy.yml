@@ -26,8 +26,10 @@ jobs:
           distribution: temurin         
 
       # 3️⃣ Construir la aplicación usando Maven.
-      - name: Build with Maven          
-        run: mvn clean package          
+      - name: Build and test with Maven
+        run: |
+          mvn clean package        # Limpia y construye el proyecto
+          mvn test                 # Ejecuta las pruebas automáticas      
 
       # 4️⃣ Copiar el archivo .war a la instancia EC2.
       - name: Copy .war to EC2          
